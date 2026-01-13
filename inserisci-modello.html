@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Inserisci Modello</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="nav-logo">
+        <img src="C:\Users\120434\Desktop\vespe\boutique-della-vespa.png">
+        <span>BOUTIQUE DELLA VESPA</span>
+    </div>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="inserisci-modello.html">Inserisci Modello</a></li>
+        <li><a href="elenco-vespe.html">Elenco Vespe</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>Inserisci Nuova Vespa</h1>
+
+    <form id="vespaForm">
+        <label>Modello</label>
+        <input type="text" id="modello" required>
+
+        <label>Prezzo (€)</label>
+        <input type="number" id="prezzo" required>
+
+        <label>Colore</label>
+        <input type="text" id="colore">
+
+        <label>Kilometri</label>
+        <input type="number" id="km">
+
+        <label>Cilindrata (cc)</label>
+        <input type="number" id="cilindrata">
+
+        <label>Condizioni</label>
+        <select id="condizioni">
+            <option>Ottimo</option>
+            <option>Buono</option>
+            <option>Da sistemare</option>
+        </select>
+
+        <label>Immagine</label>
+        <input type="file" id="immagine" accept="image/*" required>
+
+        <button type="submit">Inserisci Vespa</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("vespaForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const file = immagine.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function() {
+        const vespa = {
+            modello: modello.value,
+            prezzo: prezzo.value,
+            colore: colore.value,
+            km: km.value,
+            cilindrata: cilindrata.value,
+            condizioni: condizioni.value,
+            immagine: reader.result
+        };
+
+        const vespe = JSON.parse(localStorage.getItem("vespe")) || [];
+        vespe.push(vespa);
+        localStorage.setItem("vespe", JSON.stringify(vespe));
+
+        window.location.href = "elenco-vespe.html";
+    };
+
+    reader.readAsDataURL(file);
+});
+</script>
+
+</body>
+</html>

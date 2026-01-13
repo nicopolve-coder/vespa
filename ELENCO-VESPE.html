@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Elenco Vespe in Vendita</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="nav-logo">
+        <img src="C:\Users\120434\Desktop\vespe\boutique-della-vespa.png">
+        <span>BOUTIQUE DELLA VESPA</span>
+    </div>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="inserisci-modello.html">Inserisci Modello</a></li>
+        <li><a href="elenco-vespe.html">Elenco Vespe</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>Vespe in Vendita</h1>
+    <div id="annunci" class="cards"></div>
+</div>
+
+<script>
+function mostraAnnunci() {
+    const annunci = document.getElementById("annunci");
+    const vespe = JSON.parse(localStorage.getItem("vespe")) || [];
+    annunci.innerHTML = ""; // pulisce prima di ricreare
+
+    vespe.forEach((v, index) => {
+        annunci.innerHTML += `
+            <div class="card">
+                <img src="${v.immagine}" style="width:100%; border-radius:10px;">
+                <h3>${v.modello}</h3>
+                <p><strong>Prezzo:</strong> €${v.prezzo}</p>
+                <p><strong>Colore:</strong> ${v.colore}</p>
+                <p><strong>Km:</strong> ${v.km}</p>
+                <p><strong>Cilindrata:</strong> ${v.cilindrata} cc</p>
+                <p><strong>Condizioni:</strong> ${v.condizioni}</p>
+                <button onclick="eliminaVespa(${index})" style="background:red; color:white; padding:5px 10px; border:none; cursor:pointer;">Elimina</button>
+            </div>
+        `;
+    });
+}
+
+function eliminaVespa(index) {
+    const vespe = JSON.parse(localStorage.getItem("vespe")) || [];
+    vespe.splice(index, 1); // rimuove la vespa selezionata
+    localStorage.setItem("vespe", JSON.stringify(vespe));
+    mostraAnnunci(); // aggiorna la pagina
+}
+
+// Mostra gli annunci all'apertura
+mostraAnnunci();
+</script>
+
+</body>
+</html>
